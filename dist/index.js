@@ -22,14 +22,16 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 
 // src/index.ts
-var import_express = __toESM(require("express"));
+var import_express2 = __toESM(require("express"));
 var import_cors = __toESM(require("cors"));
 var import_dotenv = require("dotenv");
+var import_mongoose2 = __toESM(require("mongoose"));
+
+// src/controllers/userController.ts
+var import_express = __toESM(require("express"));
+
+// src/models/userModel.ts
 var import_mongoose = __toESM(require("mongoose"));
-var app = (0, import_express.default)();
-app.use((0, import_cors.default)());
-app.use(import_express.default.json());
-var PORT = process.env.PORT || 8080;
 var schemaData = new import_mongoose.default.Schema(
   {
     name: String,
@@ -43,42 +45,99 @@ var schemaData = new import_mongoose.default.Schema(
   }
 );
 var userModel = import_mongoose.default.model("user", schemaData);
-app.get("/", async (req, res) => {
-  const data = await userModel.find({});
-  res.json({ success: true, data });
-});
-app.post("/create", async (req, res) => {
-  console.log(req.body);
-  const data = new userModel(req.body);
-  await data.save();
-  res.send({ success: true, message: "Data has been created successfully", data });
-});
-app.put(
-  "/update",
-  async (req, res) => {
-    console.log(req.body);
-    const { id, ...rest } = req.body;
-    console.log(rest);
-    const data = await userModel.updateOne({ _id: id }, rest);
-    res.send({ success: true, message: "Data has been updated successfully", data });
+
+// src/repositories/userRepository.ts
+var userRepository = {
+  getAll: async () => {
+    return await userModel.find({});
+  },
+  create: async (userData) => {
+    const data = new userModel(userData);
+    return await data.save();
+  },
+  update: async (userData) => {
+    const { id, ...rest } = userData;
+    return await userModel.updateOne({ _id: id }, rest);
+  },
+  deleteById: async (userId) => {
+    return await userModel.deleteOne({
+      _id: userId
+    });
   }
-);
-app.delete("/delete/:id", async (req, res) => {
-  const { id } = req.params;
-  console.log(id);
+};
+
+// src/services/userService.ts
+var getAllUsers = async () => {
+  return await userRepository.getAll();
+};
+var createUser = async (userData) => {
+  return await userRepository.create(userData);
+};
+var updateUser = async (userData) => {
+  return await userRepository.update(userData);
+};
+var deleteUser = async (userId) => {
+  return await userRepository.deleteById(userId);
+};
+
+// src/controllers/userController.ts
+var router = import_express.default.Router();
+router.get("/", async (req, res) => {
   try {
-    const data = await userModel.deleteOne({ _id: id });
-    res.send({ success: true, message: "Data has been deleted successfully", data });
+    const data = await getAllUsers();
+    res.json({ success: true, data });
   } catch (error) {
-    console.error("Error deleting data:", error);
-    res.status(500).send({ success: false, message: "Internal server error" });
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
-import_mongoose.default.connect("mongodb://localhost:27017/crud").then(() => {
+router.post("/create", async (req, res) => {
+  try {
+    const data = await createUser(req.body);
+    res.send({
+      success: true,
+      message: "Data has been created successfully",
+      data
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+router.put("/update", async (req, res) => {
+  try {
+    const data = await updateUser(req.body);
+    res.send({
+      success: true,
+      message: "Data has been updated successfully",
+      data
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const data = await deleteUser(req.params.id);
+    res.send({
+      success: true,
+      message: "Data has been deleted successfully",
+      data
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+// src/index.ts
+var app = (0, import_express2.default)();
+app.use((0, import_cors.default)());
+app.use(import_express2.default.json());
+var PORT = process.env.PORT || 8080;
+import_mongoose2.default.connect("mongodb://localhost:27017/crud").then(() => {
   console.log("Connected to MongoDB");
   app.listen(PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
+    console.log(`Server is running on port ${PORT}`);
   });
 }).catch((err) => {
   console.log(err);
 });
+app.use("/", router);
