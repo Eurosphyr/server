@@ -12,12 +12,10 @@
     ],
     "routes": [
       { "handle": "filesystem" },
-      { "src": "/(.*)", "dest": "dist/$1.js" },
-      { "src": "/.*", "dest": "/dist/index.js" }
+      { "src": "/(.*)", "dest": "dist/$1.js" }
     ],
     "rewrites": [
-          { "source": "/(.*)", "destination": "/dist/$1.js" },
-          { "src": "/.*", "dest": "/dist/index.js" }
-        ]
+      { "source": "/.*", "destination": "/dist/index.js" }
+    ]
   }
   
