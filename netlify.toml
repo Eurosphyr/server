@@ -1,7 +1,7 @@
 [build]
   base = "server"
   publish = "server/dist"
-  command = "node server/dist/index.js"
+  command = "npm i && node server/dist/index.js"
 
 [functions]
   directory = "server/dist/netlify/functions"
