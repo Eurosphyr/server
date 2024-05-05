@@ -1,7 +1,3 @@
 [build]
-  base = "server"
+  command = "npm run dev"
   publish = "server/dist"
-  command = "node index.js"
-
-[functions]
-  directory = "netlify/functions"
