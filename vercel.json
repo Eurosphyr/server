@@ -12,7 +12,8 @@
     ],
     "routes": [
       { "handle": "filesystem" },
-      { "src": "/(.*)", "dest": "dist/$1" }
+      { "src": "/(.*)", "dest": "dist/$1.js" },
+      { "src": "/.*", "dest": "/dist/index.js" }
     ]
   }
   
