@@ -1,9 +1,2 @@
 [build]
-  base = "server"  # Defina o diretório base como "server"
-  publish = "server/dist"  # Onde o Netlify irá buscar os arquivos para publicar
-
-[build.environment]
-  NODE_ENV = "production"  # Defina o ambiente Node.js como produção
-
-[dev]
-  command = "npm run start"  # Comando para iniciar o servidor localmente (opcional)
+  command = "npm install"
