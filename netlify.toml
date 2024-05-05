@@ -1,7 +1,6 @@
 [build]
   base = "server"  # Defina o diretório base como "server"
   publish = "server/dist"  # Onde o Netlify irá buscar os arquivos para publicar
-  functions = "server/dist/netlify/functions"  # Onde o Netlify encontrará as funções compiladas
 
 [build.environment]
   NODE_ENV = "production"  # Defina o ambiente Node.js como produção
