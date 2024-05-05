@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
-import "dotenv";
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { userController } from "./controllers/userController";
 
+
+dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -11,7 +13,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 8080;
 const DATABASE: string = process.env.DATABASE_URL || '';
 
-mongoose.connect("mongodb+srv://Miguel:Eurosphyr2016@cluster0.ooo9se4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(DATABASE)
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {

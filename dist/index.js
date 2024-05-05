@@ -1,3 +1,4 @@
+"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -24,7 +25,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 // src/index.ts
 var import_express2 = __toESM(require("express"));
 var import_cors = __toESM(require("cors"));
-var import_dotenv = require("dotenv");
+var import_dotenv = __toESM(require("dotenv"));
 var import_mongoose2 = __toESM(require("mongoose"));
 
 // src/controllers/userController.ts
@@ -128,12 +129,13 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 // src/index.ts
+import_dotenv.default.config();
 var app = (0, import_express2.default)();
 app.use((0, import_cors.default)());
 app.use(import_express2.default.json());
 var PORT = process.env.PORT || 8080;
 var DATABASE = process.env.DATABASE_URL || "";
-import_mongoose2.default.connect("mongodb+srv://Miguel:Eurosphyr2016@cluster0.ooo9se4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
+import_mongoose2.default.connect(DATABASE).then(() => {
   console.log("Connected to MongoDB");
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
