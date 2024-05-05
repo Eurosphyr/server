@@ -10,12 +10,9 @@
         "use": "@vercel/static"
       }
     ],
-    "routes": [
-      { "handle": "filesystem" },
-      { "src": "/(.*)", "dest": "dist/$1.js" }
-    ],
     "rewrites": [
+      { "source": "/(.*)", "destination": "dist/$1.js" },
       { "source": "/.*", "destination": "/dist/index.js" }
     ]
-}
+  }
   
