@@ -9,9 +9,9 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
+const DATABASE: string = process.env.DATABASE_URL || '';
 
-mongoose
-  .connect("mongodb://localhost:27017/crud")
+mongoose.connect("mongodb+srv://Miguel:Eurosphyr2016@cluster0.ooo9se4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
@@ -19,7 +19,8 @@ mongoose
     });
   })
   .catch((err) => {
-    console.log(err);
+    console.error("Error connecting to MongoDB:", err);
   });
+
 
 app.use("/", userController);

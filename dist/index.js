@@ -132,12 +132,13 @@ var app = (0, import_express2.default)();
 app.use((0, import_cors.default)());
 app.use(import_express2.default.json());
 var PORT = process.env.PORT || 8080;
-import_mongoose2.default.connect("mongodb://localhost:27017/crud").then(() => {
+var DATABASE = process.env.DATABASE_URL || "";
+import_mongoose2.default.connect("mongodb+srv://Miguel:Eurosphyr2016@cluster0.ooo9se4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(() => {
   console.log("Connected to MongoDB");
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 }).catch((err) => {
-  console.log(err);
+  console.error("Error connecting to MongoDB:", err);
 });
 app.use("/", router);
