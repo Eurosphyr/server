@@ -30,9 +30,10 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.put("/update", async (req, res) => {
+router.put("/update/:id", async (req, res) => {
   try {
-    const data = await updateUser(req.body);
+    const { id } = req.params; 
+    const data = await updateUser(id, req.body); 
     res.send({
       success: true,
       message: "Data has been updated successfully",
@@ -42,6 +43,7 @@ router.put("/update", async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
+
 
 router.delete("/delete/:id", async (req, res) => {
   try {

@@ -13,15 +13,16 @@ const userRepository = {
     return await data.save();
   },
 
-  update: async (userData : any) => {
-    const { id, password, ...rest } = userData;
+  updateUser: async (id: string, userData: any) => {
+    const { password, ...rest } = userData;
     if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      return await userModel.updateOne({ _id: id }, { ...rest, password: hashedPassword });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        return await userModel.updateOne({ _id: id }, { ...rest, password: hashedPassword });
     } else {
-      return await userModel.updateOne({ _id: id }, rest);
+        return await userModel.updateOne({ _id: id }, rest);
     }
-  },
+},
+
 
   deleteById: async (userId: any) => {
     return await userModel.deleteOne({

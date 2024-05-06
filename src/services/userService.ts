@@ -8,8 +8,8 @@ export const createUser = async (userData : any) => {
   return await userRepository.create(userData);
 };
 
-export const updateUser = async (userData :any) => {
-  return await userRepository.update(userData);
+export const updateUser = async (id: string, userData: any) => {
+  return await userRepository.updateUser(id, userData);
 };
 
 export const deleteUser = async (userId : any) => {
