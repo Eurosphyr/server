@@ -6,14 +6,14 @@ const userRepository = {
     return await userModel.find({});
   },
 
-  create: async (userData :any) => {
+  create: async (userData: any) => {
     const { password, ...rest } = userData;
     const hashedPassword = await bcrypt.hash(password, 10);
     const data = new userModel({ ...rest, password: hashedPassword });
     return await data.save();
   },
 
-  update: async (userData:any) => {
+  update: async (userData : any) => {
     const { id, password, ...rest } = userData;
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -23,7 +23,7 @@ const userRepository = {
     }
   },
 
-  deleteById: async (userId:any) => {
+  deleteById: async (userId: any) => {
     return await userModel.deleteOne({
       _id: userId,
     });
