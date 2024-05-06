@@ -30,10 +30,10 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:_id", async (req, res) => {
   try {
-    const { id } = req.params; 
-    const data = await updateUser(id, req.body); 
+    const { _id } = req.params; 
+    const data = await updateUser(_id, req.body); 
     res.send({
       success: true,
       message: "Data has been updated successfully",
